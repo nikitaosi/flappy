@@ -659,6 +659,8 @@ declare type GameConfig = {
      * Simple scale applied to the game canvas. 2 is double size, 0.5 is half size, etc.
      */
     zoom?: number;
+
+    pixelArt?: boolean;
     /**
      * The size of each game pixel, in canvas pixels. Values larger than 1 are "high" resolution.
      */

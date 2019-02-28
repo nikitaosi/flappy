@@ -3,9 +3,13 @@
  * @copyright    2018 - 2019 digitsensitive
  * @license      Digitsensitive
  */
+import {Player} from "../gameobjects/Player";
 
 export class MainScene extends Phaser.Scene {
-  private phaserSprite: Phaser.GameObjects.Sprite;
+
+
+  private phaserSprite: Player;
+
 
   constructor() {
     super({
@@ -14,10 +18,18 @@ export class MainScene extends Phaser.Scene {
   }
 
   preload(): void {
-    this.load.image("logo", "./src/boilerplate/assets/phaser.png");
+    //this.load.image("logo", "./src/boilerplate/assets/phaser.png");
+    this.load.atlas('gs', './src/boilerplate/assets/gamesprites.png','./src/boilerplate/assets/gamesprites.json' );
+
   }
 
   create(): void {
-    this.phaserSprite = this.add.sprite(400, 300, "logo");
+   // this.phaserSprite = new Player(this,400, 300, "logo");
+
+    var background = this.add.sprite(68, 136, 'gs', 'bg.png');
+    this.cameras.main.setBackgroundColor('#375064');
+
+   // this.phaserSprite.lo
+
   }
 }
