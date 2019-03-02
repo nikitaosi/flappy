@@ -10,7 +10,7 @@ import {Grass} from "../gameobjects/Grass";
 export class MainScene extends Phaser.Scene {
 
 
-  private player: Player;
+  //private player: Player;
   private pipe: Pipe;
   private grass: Grass;
 
