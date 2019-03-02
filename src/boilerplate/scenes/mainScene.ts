@@ -11,7 +11,7 @@ export class MainScene extends Phaser.Scene {
 
 
   private player: Player;
-  private pipe: Pipe;
+  private  pipe: Pipe;
   private grass: Grass;
 
   private player2 : Phaser.Physics.Arcade.Sprite;
@@ -31,9 +31,12 @@ export class MainScene extends Phaser.Scene {
   create(): void {
 
     var background = this.add.sprite(68, 136, 'gs', 'bg.png');
-    this.pipe = new Pipe(this, 68, 136);
+    this.pipe = new Pipe(this);
     this.grass = new Grass(this, 68, 163, 'gs', 'grass.png');
     this.cameras.main.setBackgroundColor('#375064');
+
+    //this.add.group(this.pipe);
+
    // this.player = new Player(this,100,50,'birdanim')
   //  this.children.add(this.player);
 
@@ -58,18 +61,47 @@ export class MainScene extends Phaser.Scene {
       },this );
 
 
+
+
+
+
     //this.add.sprite(55, 135/2-5, 'birdanim').play('fly');
 
 
   }
+    shouldtFlap():boolean {
+
+        return this.player2.body.velocity.y > 70;
+    }
+
+    isFalling():boolean {
+
+      return this.player2.body.velocity.y > 100;
+  }
 
 update(): void {
-      Phaser.Actions.IncX(this.pipe.getChildren(),-1);
-      this.pipe.children.iterate(function (pipe) {
-          var tpipe = <Phaser.Physics.Arcade.Sprite> pipe;
-          if (tpipe.x<-12) {
-              tpipe.x = 145;
-          }
-      });
+    //  Phaser.Actions.IncX(this.pipe.getChildren(),-1,);
+
+
+    this.pipe.children.iterate(function (pipe) {
+        var tpipe = <Phaser.Physics.Arcade.Sprite> pipe;
+        tpipe.setX(tpipe.x-1);
+        tpipe.refreshBody();
+        if (tpipe.x<-12) {
+            tpipe.x = 145;
+        }
+    });
+
+   //if(this.player2.body.velocity.y <0)
+   //{
+
+   //}
+
+    if(this.isFalling())
+    {
+
+
+    }
+
 }
 }
