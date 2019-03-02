@@ -32,6 +32,15 @@ export class MainScene extends Phaser.Scene {
     this.grass = new Grass(this, 68, 163, 'gs', 'grass.png');
     this.cameras.main.setBackgroundColor('#375064');
     //this.player = new Player(this,100,100,'gs','')
-
   }
+
+update(): void {
+      Phaser.Actions.IncX(this.pipe.getChildren(),-1);
+      this.pipe.children.iterate(function (pipe) {
+          var tpipe = <Phaser.Physics.Arcade.Sprite> pipe;
+          if (tpipe.x<-12) {
+              tpipe.x = 145;
+          }
+      });
+}
 }
