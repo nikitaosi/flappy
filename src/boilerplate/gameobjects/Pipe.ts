@@ -5,6 +5,7 @@ export class Pipe extends Phaser.Physics.Arcade.StaticGroup {
     private toppipebody: Phaser.Physics.Arcade.Sprite;
     private bottompipebody: Phaser.Physics.Arcade.Sprite;
     private bottompipehead: Phaser.Physics.Arcade.Sprite;
+    private emptypipe: Phaser.GameObjects.Zone;
 
     constructor(scene, x) {
         super(scene.physics.world, scene);
@@ -13,9 +14,13 @@ export class Pipe extends Phaser.Physics.Arcade.StaticGroup {
         this.toppipebody = this.create(x,  this.toppipepos, 'gs', 'pipebody.png');
         this.bottompipebody = this.create(x,  this.toppipepos+73, 'gs', 'pipebody.png');
         this.bottompipehead = this.create(x-1,  this.toppipepos+73, 'gs', 'pipe.png');
+        this.emptypipe = scene.add.zone(50, 70).setSize(20, 45);
 
+        scene.physics.world.enable(this.emptypipe);
+        this.emptypipe.body.setAllowGravity(false);
+        //scene.physics.add.overlap(scene.player2, this.emptypipe);
 
-
+        this.emptypipe.body.debugBodyColor = 0x00ffff;
         this.toppipehead.flipY = true;
         this.toppipebody.scaleY = 50;
         this.bottompipebody.scaleY = 50;
@@ -39,5 +44,7 @@ export class Pipe extends Phaser.Physics.Arcade.StaticGroup {
         this.toppipebody.setY(this.toppipepos);
         this.bottompipebody.setY(this.toppipepos+73);
         this.bottompipehead.setY(this.toppipepos+73);
+        this.emptypipe.setX(10);
+        this.emptypipe.setY(this.toppipepos);
     }
 }
