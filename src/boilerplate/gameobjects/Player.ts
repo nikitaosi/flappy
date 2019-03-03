@@ -1,4 +1,5 @@
 import {KeysEnum} from "./KeysEnum";
+import {MainScene} from "../scenes/mainScene";
 
 
 export class Player extends Phaser.Physics.Arcade.Sprite {
@@ -13,6 +14,8 @@ private flapSound : Phaser.Sound.BaseSound;
         scene.physics.world.enableBody(this);
 
         scene.children.add(this);
+        // @ts-ignore
+        this.body.allowGravity = false;
         this.setAnimation();
         this.setInput();
 
@@ -40,6 +43,12 @@ private flapSound : Phaser.Sound.BaseSound;
     setInput():void
     {
         this.scene.input.keyboard.on('keydown_SPACE', function (event) {
+
+            if(!MainScene.gameStart)
+            {
+
+            }
+
             this.body.setVelocityY(-100);
             this.flapSound.play();
         },this );
