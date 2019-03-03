@@ -6,6 +6,7 @@
 import {Player} from "../gameobjects/Player";
 import {Pipe} from "../gameobjects/Pipe";
 import {Grass} from "../gameobjects/Grass";
+import {KeysEnum} from "../gameobjects/KeysEnum";
 
 export class MainScene extends Phaser.Scene {
 
@@ -16,10 +17,7 @@ export class MainScene extends Phaser.Scene {
     private gameStart : boolean;
     private rotation : number;
     private speed : number;
-
   //private player2 : Phaser.Physics.Arcade.Sprite;
-
-
     constructor() {
     super({
       key: "MainScene"
@@ -27,8 +25,11 @@ export class MainScene extends Phaser.Scene {
     }
 
     preload(): void {
-    this.load.atlas('gs', './src/boilerplate/assets/gamesprites.png','./src/boilerplate/assets/gamesprites.json' );
+        this.load.atlas('gs', './src/boilerplate/assets/gamesprites.png','./src/boilerplate/assets/gamesprites.json' );
         this.load.spritesheet('birdanim','./src/boilerplate/assets/bird.png',{ frameWidth: 17, frameHeight: 12 });
+
+        this.load.audio(KeysEnum.SOUND_FLAP,KeysEnum.SOUND_FLAP_PATH);
+        this.load.audio(KeysEnum.SOUND_SCORE,KeysEnum.SOUND_SCORE_PATH);
     }
 
     create(): void {
