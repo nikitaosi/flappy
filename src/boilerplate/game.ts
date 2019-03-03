@@ -15,12 +15,11 @@ const config: GameConfig = {
   type: Phaser.AUTO,
   parent: "game",
   pixelArt: true,
-
   scene: MainScene,
   physics: {
     default: "arcade",
     arcade: {
-      debug : true,
+    //  debug : true,
       gravity: { y: 200 }
     }
   }
