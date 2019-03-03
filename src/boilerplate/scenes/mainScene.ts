@@ -37,16 +37,15 @@ export class MainScene extends Phaser.Scene {
     this.grass = new Grass(this, 68, 163, 'gs', 'grass.png');
     this.cameras.main.setBackgroundColor('#375064');
         this.player2 = new Player(this, 33, 135 / 2 - 5, 'birdanim')
-
-        this.physics.add.collider(this.player2 ,MainScene.pipe,function (e) {this.timedEvent.paused = true;},null,this);
-        this.physics.add.collider(this.player2 ,this.grass,function (e) {this.timedEvent.paused = true;},null,this);
+        this.physics.add.collider(this.player2 ,MainScene.pipe,function (e) {this.timedEvent.paused = true; this.scene.restart();},null,this);
+        this.physics.add.collider(this.player2 ,this.grass,function (e) {this.timedEvent.paused = true; this.scene.restart();},null,this);
 
         this.timedEvent = this.time.addEvent({ delay: 1, callback: this.callbackMove, callbackScope:this, repeat: -1 });
 
         this.input.keyboard.on('keydown_G', function (event) {
             console.log(this.timedEvent.paused);
             if (this.timedEvent.paused)
-                {this.timedEvent.paused = false} else
+                {this.timedEvent.paused = false;} else
                 {this.timedEvent.paused = true};
         },this );
 
