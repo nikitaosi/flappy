@@ -6,13 +6,13 @@ export class Pipe extends Phaser.Physics.Arcade.StaticGroup {
     private bottompipebody: Phaser.Physics.Arcade.Sprite;
     private bottompipehead: Phaser.Physics.Arcade.Sprite;
 
-    constructor(scene) {
+    constructor(scene, x) {
         super(scene.physics.world, scene);
         this.toppipepos = Phaser.Math.Between(30, 80);
-        this.toppipehead = this.create(112,  this.toppipepos, 'gs', 'pipe.png');
-        this.toppipebody = this.create(113,  this.toppipepos, 'gs', 'pipebody.png');
-        this.bottompipebody = this.create(113,  this.toppipepos+73, 'gs', 'pipebody.png');
-        this.bottompipehead = this.create(112,  this.toppipepos+73, 'gs', 'pipe.png');
+        this.toppipehead = this.create(x-1,  this.toppipepos, 'gs', 'pipe.png');
+        this.toppipebody = this.create(x,  this.toppipepos, 'gs', 'pipebody.png');
+        this.bottompipebody = this.create(x,  this.toppipepos+73, 'gs', 'pipebody.png');
+        this.bottompipehead = this.create(x-1,  this.toppipepos+73, 'gs', 'pipe.png');
 
 
 
