@@ -15,8 +15,11 @@ export class MainScene extends Phaser.Scene {
     private grass: Grass;
     private timedEvent: Phaser.Time.TimerEvent;
     private total: integer;
+    private scoreText: Phaser.GameObjects.BitmapText;
+    private scoreText2: Phaser.GameObjects.BitmapText;
+    bounds: BitmapTextSize;
 
-  constructor() {
+    constructor() {
     super({
       key: "MainScene"
     });
@@ -24,10 +27,14 @@ export class MainScene extends Phaser.Scene {
 
   preload(): void {
     this.load.atlas('gs', './src/boilerplate/assets/gamesprites.png','./src/boilerplate/assets/gamesprites.json' );
-        this.load.spritesheet('birdanim','./src/boilerplate/assets/bird.png',{ frameWidth: 17, frameHeight: 12 });
+    this.load.spritesheet('birdanim','./src/boilerplate/assets/bird.png',{ frameWidth: 17, frameHeight: 12 });
     this.load.image('123', './src/boilerplate/assets/earth.png');
+    this.load.bitmapFont('flappyscore', './src/boilerplate/assets/text.png', './src/boilerplate/assets/text.xml');
     };
     create(): void {
+        this.scoreText = this.add.bitmapText( 67, 10, 'flappyscore', '0', 12).setOrigin(0.5);
+        if (this.data.get('score') === undefined) {this.data.set('score', 0)};
+        this.scoreText2 = this.add.bitmapText( 67, 25, 'flappyscore', 'best: ' + this.data.get('score'), 12).setOrigin(0.5);
 
     var background = this.add.sprite(68, 136, 'gs', 'bg.png');
     var earth = this.add.image(68, 188, '123', './src/boilerplate/assets/earth.png');
@@ -39,7 +46,7 @@ export class MainScene extends Phaser.Scene {
     this.cameras.main.setBackgroundColor('#375064');
         this.physics.add.collider(this.player2 ,MainScene.pipe,function (e) {this.timedEvent.paused = true; this.scene.restart();},null,this);
         this.physics.add.collider(this.player2 ,this.grass,function (e) {this.timedEvent.paused = true; /*this.scene.restart();*/},null,this);
-
+        this.player2.body.isCircle = true;
         this.timedEvent = this.time.addEvent({ delay: 1, callback: this.callbackMove, callbackScope:this, repeat: -1 });
 
         this.input.keyboard.on('keydown_G', function (event) {
@@ -48,6 +55,8 @@ export class MainScene extends Phaser.Scene {
                 {this.timedEvent.paused = false;} else
                 {this.timedEvent.paused = true};
         },this );
+
+
 
     }
     callbackMove(): void {
@@ -69,10 +78,15 @@ export class MainScene extends Phaser.Scene {
            else {
                let pipech = <Phaser.GameObjects.Zone> tpipe;
                pipech.x-=1;
-               if (!pipech.body.touching.none) {
-                   this.total++;
-                   console.log(this.total);
-                   pipech.body.checkCollision.none = true}
+                   if (!pipech.body.touching.none) {
+                       this.total++;
+                       console.log(this.total);
+                       pipech.body.checkCollision.none = true;
+                       this.scoreText.setText(this.total);
+                       if (this.total > this.data.get('score')){
+                           this.data.set('score', this.total);
+                       };
+                   }
                };
        }, this);
    };
