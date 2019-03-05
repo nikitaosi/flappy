@@ -10,7 +10,7 @@ import {Grass} from "../gameobjects/Grass";
 export class MainScene extends Phaser.Scene {
 
 
-    private player2: Player;
+    player2: Player;
     private static pipe: [Pipe, Pipe, Pipe];
     private grass: Grass;
     private timedEvent: Phaser.Time.TimerEvent;
@@ -31,11 +31,12 @@ export class MainScene extends Phaser.Scene {
     var background = this.add.sprite(68, 136, 'gs', 'bg.png');
     var earth = this.add.image(68, 188, '123', './src/boilerplate/assets/earth.png');
     earth.depth = 1;
+        this.player2 = new Player(this, 33, 135 / 2 - 5, 'birdanim')
     MainScene.pipe = [new Pipe(this, 113), new Pipe(this, 193), new Pipe(this, 273)];
 
     this.grass = new Grass(this, 68, 163, 'gs', 'grass.png');
     this.cameras.main.setBackgroundColor('#375064');
-        this.player2 = new Player(this, 33, 135 / 2 - 5, 'birdanim')
+
       //     this.physics.add.collider(this.player2 ,MainScene.pipe,function (e) {this.timedEvent.paused = true; this.scene.restart();},null,this);
         this.physics.add.collider(this.player2 ,this.grass,function (e) {this.timedEvent.paused = true; /*this.scene.restart();*/},null,this);
 
@@ -62,8 +63,16 @@ export class MainScene extends Phaser.Scene {
 
             if(tpipe instanceof Phaser.GameObjects.Zone)
             {
+
                 let pipech = <Phaser.GameObjects.Zone> tpipe;
-                console.log(tpipe.x);
+
+                //pipech.x-=1;
+
+                pipech.body.debugBodyColor = pipech.body.touching.none ? 0x00ffff : 0xffff00;
+
+
+
+                //console.log(tpipe.x);
                  pipech.x-=1;
             }
 

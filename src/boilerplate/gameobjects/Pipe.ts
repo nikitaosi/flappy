@@ -1,3 +1,5 @@
+import {MainScene} from "../scenes/mainScene";
+
 export class Pipe extends Phaser.Physics.Arcade.StaticGroup {
 
     private toppipepos: integer;
@@ -6,6 +8,7 @@ export class Pipe extends Phaser.Physics.Arcade.StaticGroup {
     private bottompipebody: Phaser.Physics.Arcade.Sprite;
     private bottompipehead: Phaser.Physics.Arcade.Sprite;
     private emptypipe: Phaser.GameObjects.Zone;
+    private sc : MainScene;
 
     constructor(scene, x) {
         super(scene.physics.world, scene);
@@ -18,6 +21,7 @@ export class Pipe extends Phaser.Physics.Arcade.StaticGroup {
 
         var az = this.scene.make.zone({x:10,y:10,width:20,height:30});
 
+        this.sc = scene;
 
         //this.create(0,0,"logo");
 
@@ -28,8 +32,10 @@ export class Pipe extends Phaser.Physics.Arcade.StaticGroup {
         this.emptypipe = az;
         this.add(az);
 
+        this.scene.physics.add.overlap(this.sc.player2,this.emptypipe);
 
-        //scene.physics.add.overlap(scene.player2, this.emptypipe);
+
+          scene.physics.add.overlap(scene.player2, this.emptypipe);
 
        this.emptypipe.body.debugBodyColor = 0x00ffff;
 
@@ -63,9 +69,5 @@ export class Pipe extends Phaser.Physics.Arcade.StaticGroup {
     }
 
 
-    preUpdate(time: number, delta: number): void {
-        super.preUpdate(time,delta);
-        this.emptypipe.x-=1;
-       // this.emptypipe.body.
-    }
+
 }
