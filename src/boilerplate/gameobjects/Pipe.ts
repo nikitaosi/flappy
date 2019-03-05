@@ -14,13 +14,26 @@ export class Pipe extends Phaser.Physics.Arcade.StaticGroup {
         this.toppipebody = this.create(x,  this.toppipepos, 'gs', 'pipebody.png');
         this.bottompipebody = this.create(x,  this.toppipepos+73, 'gs', 'pipebody.png');
         this.bottompipehead = this.create(x-1,  this.toppipepos+73, 'gs', 'pipe.png');
-        this.emptypipe = scene.add.zone(50, 70).setSize(20, 45);
 
-        scene.physics.world.enable(this.emptypipe);
-        this.emptypipe.body.setAllowGravity(false);
+
+        var az = this.scene.make.zone({x:10,y:10,width:20,height:30});
+
+
+        //this.create(0,0,"logo");
+
+        this.scene.physics.world.enable(az);
+        az.body.setAllowGravity(false);
+        az.body.moves = false;
+
+        this.emptypipe = az;
+        this.add(az);
+
+
         //scene.physics.add.overlap(scene.player2, this.emptypipe);
 
-        this.emptypipe.body.debugBodyColor = 0x00ffff;
+       this.emptypipe.body.debugBodyColor = 0x00ffff;
+
+
         this.toppipehead.flipY = true;
         this.toppipebody.scaleY = 50;
         this.bottompipebody.scaleY = 50;
@@ -44,7 +57,15 @@ export class Pipe extends Phaser.Physics.Arcade.StaticGroup {
         this.toppipebody.setY(this.toppipepos);
         this.bottompipebody.setY(this.toppipepos+73);
         this.bottompipehead.setY(this.toppipepos+73);
-        this.emptypipe.setX(10);
+
+        this.emptypipe.setX(120);
         this.emptypipe.setY(this.toppipepos);
+    }
+
+
+    preUpdate(time: number, delta: number): void {
+        super.preUpdate(time,delta);
+        this.emptypipe.x-=1;
+       // this.emptypipe.body.
     }
 }

@@ -36,7 +36,7 @@ export class MainScene extends Phaser.Scene {
     this.grass = new Grass(this, 68, 163, 'gs', 'grass.png');
     this.cameras.main.setBackgroundColor('#375064');
         this.player2 = new Player(this, 33, 135 / 2 - 5, 'birdanim')
-        this.physics.add.collider(this.player2 ,MainScene.pipe,function (e) {this.timedEvent.paused = true; this.scene.restart();},null,this);
+      //     this.physics.add.collider(this.player2 ,MainScene.pipe,function (e) {this.timedEvent.paused = true; this.scene.restart();},null,this);
         this.physics.add.collider(this.player2 ,this.grass,function (e) {this.timedEvent.paused = true; /*this.scene.restart();*/},null,this);
 
         this.timedEvent = this.time.addEvent({ delay: 1, callback: this.callbackMove, callbackScope:this, repeat: -1 });
@@ -49,6 +49,7 @@ export class MainScene extends Phaser.Scene {
         },this );
 
     }
+
     callbackMove(): void {
         MainScene.pipe.forEach(function (pipe) { this.movePipe(pipe);}, this);
         this.grass.moveGrass();
@@ -58,12 +59,25 @@ export class MainScene extends Phaser.Scene {
 
     movePipe(pipe): void {
         pipe.children.iterate(function (tpipe) {
-            var pipech = <Phaser.GameObjects.Zone> tpipe;
-            pipech.setX(pipech.x-1);
-            pipech.refreshBody();
-            if (pipech.x < -110) {
-                pipe.replacepipe();
+
+            if(tpipe instanceof Phaser.GameObjects.Zone)
+            {
+                let pipech = <Phaser.GameObjects.Zone> tpipe;
+                console.log(tpipe.x);
+                 pipech.x-=1;
             }
+
+            if(tpipe instanceof Phaser.Physics.Arcade.Sprite)
+            {
+                let pipech = <Phaser.Physics.Arcade.Sprite> tpipe;
+                pipech.setX(pipech.x-1);
+                pipech.refreshBody();
+                if (pipech.x < -110) {
+                    pipe.replacepipe();
+                }
+            }
+
+
         });
     };
 }
