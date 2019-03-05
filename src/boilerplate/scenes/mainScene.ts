@@ -14,6 +14,7 @@ export class MainScene extends Phaser.Scene {
     private static pipe: [Pipe, Pipe, Pipe];
     private grass: Grass;
     private timedEvent: Phaser.Time.TimerEvent;
+    public physics2 : Phaser.Physics.Arcade.World;
 
   constructor() {
     super({
@@ -68,9 +69,10 @@ export class MainScene extends Phaser.Scene {
 
                 //pipech.x-=1;
 
-                pipech.body.debugBodyColor = pipech.body.touching.none ? 0x00ffff : 0xffff00;
 
 
+              // pipech.setActive(false);
+              // pipech.setVisible(false);
 
                 //console.log(tpipe.x);
                  pipech.x-=1;
@@ -87,6 +89,6 @@ export class MainScene extends Phaser.Scene {
             }
 
 
-        });
+        },this);
     };
 }

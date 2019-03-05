@@ -30,14 +30,22 @@ export class Pipe extends Phaser.Physics.Arcade.StaticGroup {
         az.body.moves = false;
 
         this.emptypipe = az;
+        this.emptypipe.setActive(false);
         this.add(az);
 
-        this.scene.physics.add.overlap(this.sc.player2,this.emptypipe);
+        this.scene.physics.add.overlap(this.sc.player2,this.emptypipe,function (ob1,ob2) {
+            ob2.body.debugBodyColor = 0xffff00;
+
+            console.log('collide');
+            ob2.body.checkCollision.none = true;
 
 
-          scene.physics.add.overlap(scene.player2, this.emptypipe);
+        },null,scene);
 
-       this.emptypipe.body.debugBodyColor = 0x00ffff;
+
+          //scene.physics.add.overlap(scene.player2, this.emptypipe);
+
+        this.emptypipe.body.debugBodyColor = 0x00ffff;
 
 
         this.toppipehead.flipY = true;
@@ -66,6 +74,9 @@ export class Pipe extends Phaser.Physics.Arcade.StaticGroup {
 
         this.emptypipe.setX(120);
         this.emptypipe.setY(this.toppipepos);
+
+        this.emptypipe.body.debugBodyColor = 0x00ffff;
+          this.emptypipe.body.checkCollision.none = false;
     }
 
 
