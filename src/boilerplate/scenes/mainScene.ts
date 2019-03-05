@@ -14,6 +14,7 @@ export class MainScene extends Phaser.Scene {
     private static pipe: [Pipe, Pipe, Pipe];
     private grass: Grass;
     private timedEvent: Phaser.Time.TimerEvent;
+    private total: integer;
 
   constructor() {
     super({
@@ -31,11 +32,11 @@ export class MainScene extends Phaser.Scene {
     var background = this.add.sprite(68, 136, 'gs', 'bg.png');
     var earth = this.add.image(68, 188, '123', './src/boilerplate/assets/earth.png');
     earth.depth = 1;
-    MainScene.pipe = [new Pipe(this, 113), new Pipe(this, 193), new Pipe(this, 273)];
-
+    this.player2 = new Player(this, 33, 135 / 2 - 5, 'birdanim')
+    MainScene.pipe = [new Pipe(this, 163), new Pipe(this, 243), new Pipe(this, 323)];
+    this.total = 0;
     this.grass = new Grass(this, 68, 163, 'gs', 'grass.png');
     this.cameras.main.setBackgroundColor('#375064');
-        this.player2 = new Player(this, 33, 135 / 2 - 5, 'birdanim')
         this.physics.add.collider(this.player2 ,MainScene.pipe,function (e) {this.timedEvent.paused = true; this.scene.restart();},null,this);
         this.physics.add.collider(this.player2 ,this.grass,function (e) {this.timedEvent.paused = true; /*this.scene.restart();*/},null,this);
 
@@ -56,14 +57,23 @@ export class MainScene extends Phaser.Scene {
 
     }
 
-    movePipe(pipe): void {
-        pipe.children.iterate(function (tpipe) {
-            var pipech = <Phaser.GameObjects.Zone> tpipe;
-            pipech.setX(pipech.x-1);
-            pipech.refreshBody();
-            if (pipech.x < -110) {
-                pipe.replacepipe();
-            }
-        });
-    };
+   movePipe(pipe): void {
+       pipe.children.iterate(function (tpipe) {
+           if (tpipe instanceof Phaser.Physics.Arcade.Sprite) {
+               let pipech = <Phaser.Physics.Arcade.Sprite> tpipe;
+               pipech.x-=1;
+               pipech.refreshBody();
+               if (pipech.x < -110) {
+                   pipe.replacepipe();
+           }}
+           else {
+               let pipech = <Phaser.GameObjects.Zone> tpipe;
+               pipech.x-=1;
+               if (!pipech.body.touching.none) {
+                   this.total++;
+                   console.log(this.total);
+                   pipech.body.checkCollision.none = true}
+               };
+       }, this);
+   };
 }
