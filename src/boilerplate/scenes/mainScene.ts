@@ -6,7 +6,7 @@
 import {Player} from "../gameobjects/Player";
 import {Pipe} from "../gameobjects/Pipe";
 import {Grass} from "../gameobjects/Grass";
-import {KeysEnum} from "../gameobjects/KeysEnum";
+import {KE} from "../gameobjects/KE";
 
 export class MainScene extends Phaser.Scene {
 
@@ -20,24 +20,19 @@ export class MainScene extends Phaser.Scene {
 
     constructor() {
         super({
-            key: "MainScene"
+            key: KE.SCENE_MAIN
         });
     }
 
-    preload(): void {
-        this.load.atlas('gs', './src/boilerplate/assets/gamesprites.png','./src/boilerplate/assets/gamesprites.json' );
-        this.load.spritesheet('birdanim','./src/boilerplate/assets/bird.png',{ frameWidth: 17, frameHeight: 12 });
 
-        this.load.audio(KeysEnum.SOUND_FLAP,KeysEnum.SOUND_FLAP_PATH);
-        this.load.audio(KeysEnum.SOUND_SCORE,KeysEnum.SOUND_SCORE_PATH);
-        this.load.image('123', './src/boilerplate/assets/earth.png');
-    };
 
     create(): void {
 
 
         var background = this.add.sprite(68, 136, 'gs', 'bg.png');
-        var earth = this.add.image(68, 188, '123', './src/boilerplate/assets/earth.png');
+
+
+        var earth = this.add.image(68, 188, KE.SP_EARTH, KE.SP_EARTH_PATH);
         earth.depth = 1;
         MainScene.pipe = [new Pipe(this, 113), new Pipe(this, 193), new Pipe(this, 273)];
         this.grass = new Grass(this, 68, 163, 'gs', 'grass.png');
@@ -52,6 +47,7 @@ export class MainScene extends Phaser.Scene {
             {this.timedEvent.paused = true};
         },this );
        // this.startGame();
+       // this.
     }
 
     startGame():void

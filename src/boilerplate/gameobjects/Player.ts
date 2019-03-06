@@ -1,4 +1,4 @@
-import {KeysEnum} from "./KeysEnum";
+import {KE} from "./KE";
 import {MainScene} from "../scenes/mainScene";
 
 
@@ -19,7 +19,7 @@ private flapSound : Phaser.Sound.BaseSound;
         this.setAnimation();
         this.setInput();
 
-        this.flapSound = this.scene.sound.add(KeysEnum.SOUND_FLAP);
+        this.flapSound = this.scene.sound.add(KE.S_FLAP);
 
 
        // music.play();
