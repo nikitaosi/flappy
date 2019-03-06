@@ -17,7 +17,8 @@ export class MainScene extends Phaser.Scene {
     private total: integer;
     private scoreText: Phaser.GameObjects.BitmapText;
     private scoreText2: Phaser.GameObjects.BitmapText;
-    bounds: BitmapTextSize;
+    private bounds: BitmapTextSize;
+    public static alive: boolean;
 
     constructor() {
     super({
@@ -35,7 +36,7 @@ export class MainScene extends Phaser.Scene {
         this.scoreText = this.add.bitmapText( 67, 10, 'flappyscore', '0', 12).setOrigin(0.5);
         if (this.data.get('score') === undefined) {this.data.set('score', 0)};
         this.scoreText2 = this.add.bitmapText( 67, 25, 'flappyscore', 'best: ' + this.data.get('score'), 12).setOrigin(0.5);
-
+    MainScene.alive = true;
     var background = this.add.sprite(68, 136, 'gs', 'bg.png');
     var earth = this.add.image(68, 188, '123', './src/boilerplate/assets/earth.png');
     earth.depth = 1;
@@ -44,17 +45,15 @@ export class MainScene extends Phaser.Scene {
     this.total = 0;
     this.grass = new Grass(this, 68, 163, 'gs', 'grass.png');
     this.cameras.main.setBackgroundColor('#375064');
-        this.physics.add.collider(this.player2 ,MainScene.pipe,function (e) {this.timedEvent.paused = true; this.scene.restart();},null,this);
+        this.physics.add.collider(this.player2 ,MainScene.pipe,function (e) {
+            this.endGame();
+            MainScene.alive = false;
+            this.timedEvent.paused = true;
+            },null, this);
         this.physics.add.collider(this.player2 ,this.grass,function (e) {this.timedEvent.paused = true; /*this.scene.restart();*/},null,this);
         this.player2.body.isCircle = true;
         this.timedEvent = this.time.addEvent({ delay: 1, callback: this.callbackMove, callbackScope:this, repeat: -1 });
 
-        this.input.keyboard.on('keydown_G', function (event) {
-            console.log(this.timedEvent.paused);
-            if (this.timedEvent.paused)
-                {this.timedEvent.paused = false;} else
-                {this.timedEvent.paused = true};
-        },this );
 
 
 
@@ -64,6 +63,13 @@ export class MainScene extends Phaser.Scene {
         this.grass.moveGrass();
 
 
+    }
+
+    endGame(): void {
+        if (MainScene.alive == true) {this.cameras.main.fadeIn(200, 255, 255, 255);}
+            this.input.keyboard.on('keydown_SPACE', function (event) {
+                this.scene.restart();
+            },this);
     }
 
    movePipe(pipe): void {

@@ -1,5 +1,4 @@
-
-
+import {MainScene} from "../scenes/mainScene";
 
 
 export class Player extends Phaser.Physics.Arcade.Sprite {
@@ -36,9 +35,12 @@ private flap : boolean;
 
     setInput():void
     {
-        this.scene.input.keyboard.on('keydown_SPACE', function (event) {
-            this.body.setVelocityY(-100);
-        },this );
+       if(MainScene.alive == true) {
+           this.scene.input.keyboard.on('keydown_SPACE', function (event) {
+               this.body.setVelocityY(-100);
+               console.log(MainScene.alive);
+           },this );
+       }
     }
 
 
