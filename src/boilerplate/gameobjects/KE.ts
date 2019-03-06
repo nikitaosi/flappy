@@ -48,6 +48,9 @@ export enum KE {
 
     SCENE_START = 'StartScene',
     SCENE_MAIN = 'MainScene',
-    SCENE_PRELOAD = 'PreloadScene'
+    SCENE_PRELOAD = 'PreloadScene',
+
+    SP_BG = 'gs',
+    SP_BG_FRAME = 'bg.png',
 
 }

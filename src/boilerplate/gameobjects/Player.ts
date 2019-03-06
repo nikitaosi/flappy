@@ -30,13 +30,7 @@ private mainScene : MainScene;
 
     setAnimation():void
     {
-        var config = {
-            key: 'fly',
-            frames: this.scene.anims.generateFrameNumbers('birdanim', { frames: [ 0, 1, 2 ] }),
-            frameRate: 10,
-            repeat: -1
-        };
-        this.scene.anims.create(config);
+
         this.play('fly');
     }
 

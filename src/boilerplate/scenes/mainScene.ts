@@ -42,7 +42,7 @@ export class MainScene extends Phaser.Scene {
 
         this.total = 0;
         this.cameras.main.setBackgroundColor('#375064');
-        this.player2 = new Player(this, 33, 135 / 2 - 5, 'birdanim')
+        this.player2 = new Player(this, 33, 135 / 2 - 5, KE.SPH_BIRD)
         MainScene.pipe = [new Pipe(this, 163), new Pipe(this, 243), new Pipe(this, 323)];
         var earth = this.add.sprite(68, 188, KE.SP_EARTH);
         this.grass = new Grass(this, 68, 163, 'gs', 'grass.png');
