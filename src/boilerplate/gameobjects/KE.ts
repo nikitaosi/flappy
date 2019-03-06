@@ -12,6 +12,31 @@ export enum KE {
     AT_GS_PATH = './src/boilerplate/assets/gamesprites.png',
     AT_GS_JSON = './src/boilerplate/assets/gamesprites.json',
 
+    AT_UI = 'ui',
+    AT_UI_PATH = './src/boilerplate/assets/gamesprites2.png',
+    AT_UI_JSON = './src/boilerplate/assets/gamesprites2.json',
+
+    SP_READY = 'ui',
+    SP_READY_FRAME = 'ready.png',
+
+    SP_RATING = 'ui',
+    SP_RATING_FRAME = 'rating.png',
+
+    SP_HIGHSCORE = 'ui',
+    SP_HIGHSCORE_FRAME = 'highscore.png',
+
+    SP_GAMEOVER = 'ui',
+    SP_GAMEOVER_FRAME = 'gameover.png',
+
+    SP_RETRY = 'ui',
+    SP_RETRY_FRAME = 'retry.png',
+
+    SP_PALESTAR = 'ui',
+    SP_PALESTAR_FRAME = 'palestar.png',
+
+    SP_SHININGSTAR = 'ui',
+    SP_SHININGSTAR_FRAME = 'shiningstar.png',
+
     SP_LOGO = 'gs',
     SP_LOGO_FRAME = 'logo.png',
 

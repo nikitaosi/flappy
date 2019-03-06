@@ -1,0 +1,167 @@
+{
+	"textures": [
+		{
+			"image": "gamesprites2.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 99,
+				"h": 60
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "rating.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 97,
+						"h": 37
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 97,
+						"h": 37
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 97,
+						"h": 37
+					}
+				},
+				{
+					"filename": "highscore.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 48,
+						"h": 7
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 48,
+						"h": 7
+					},
+					"frame": {
+						"x": 1,
+						"y": 40,
+						"w": 48,
+						"h": 7
+					}
+				},
+				{
+					"filename": "gameover.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 46,
+						"h": 7
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 46,
+						"h": 7
+					},
+					"frame": {
+						"x": 51,
+						"y": 40,
+						"w": 46,
+						"h": 7
+					}
+				},
+				{
+					"filename": "ready.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 34,
+						"h": 7
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 34,
+						"h": 7
+					},
+					"frame": {
+						"x": 1,
+						"y": 49,
+						"w": 34,
+						"h": 7
+					}
+				},
+				{
+					"filename": "retry.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 33,
+						"h": 7
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 33,
+						"h": 7
+					},
+					"frame": {
+						"x": 37,
+						"y": 49,
+						"w": 33,
+						"h": 7
+					}
+				},
+				{
+					"filename": "palestar.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 10,
+						"h": 10
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 10,
+						"h": 10
+					},
+					"frame": {
+						"x": 72,
+						"y": 49,
+						"w": 10,
+						"h": 10
+					}
+				},
+				{
+					"filename": "shiningstar.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 10,
+						"h": 10
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 10,
+						"h": 10
+					},
+					"frame": {
+						"x": 84,
+						"y": 49,
+						"w": 10,
+						"h": 10
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:f7782b24370796fb04daa8a3ea5f1e85:5b9415431abd578402056588f0386ccc:cbce6b53f0f49e0bf15173c25c41f876$"
+	}
+}
