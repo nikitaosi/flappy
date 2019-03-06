@@ -1,9 +1,11 @@
+import {KE} from "./KE";
 import {MainScene} from "../scenes/mainScene";
 
 
 export class Player extends Phaser.Physics.Arcade.Sprite {
 
 private flap : boolean;
+private flapSound : Phaser.Sound.BaseSound;
 
     constructor(scene,x,y,texture) {
         super(scene,x,y,texture);
@@ -12,10 +14,15 @@ private flap : boolean;
         scene.physics.world.enableBody(this);
 
         scene.children.add(this);
+        // @ts-ignore
+        this.body.allowGravity = false;
         this.setAnimation();
         this.setInput();
 
+        this.flapSound = this.scene.sound.add(KE.S_FLAP);
 
+
+       // music.play();
     }
 
 
@@ -39,6 +46,7 @@ private flap : boolean;
            this.scene.input.keyboard.on('keydown_SPACE', function (event) {
                this.body.setVelocityY(-100);
                console.log(MainScene.alive);
+               this.flapSound.play();
            },this );
        }
     }
