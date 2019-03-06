@@ -20,6 +20,7 @@ export class MainScene extends Phaser.Scene {
     private scoreText2: Phaser.GameObjects.BitmapText;
     private bounds: BitmapTextSize;
     public static alive: boolean;
+    static gameStart: boolean;
 
     constructor() {
         super({
@@ -37,26 +38,38 @@ export class MainScene extends Phaser.Scene {
         MainScene.alive = true;
 
         var background = this.add.sprite(68, 136, 'gs', 'bg.png');
-        var earth = this.add.image(68, 188, KE.SP_EARTH, KE.SP_EARTH_PATH);
-        earth.depth = 1;
 
-        MainScene.pipe = [new Pipe(this, 113), new Pipe(this, 193), new Pipe(this, 273)];
+
         this.total = 0;
-        this.grass = new Grass(this, 68, 163, 'gs', 'grass.png');
         this.cameras.main.setBackgroundColor('#375064');
         this.player2 = new Player(this, 33, 135 / 2 - 5, 'birdanim')
-        this.physics.add.collider(this.player2 ,MainScene.pipe,function (e) {
-            this.endGame();
-            MainScene.alive = false;
-            this.timedEvent.paused = true;
-        },null, this);
-        this.physics.add.collider(this.player2 ,this.grass,function (e) {this.timedEvent.paused = true; this.scene.restart();},null,this);
+        MainScene.pipe = [new Pipe(this, 163), new Pipe(this, 243), new Pipe(this, 323)];
+        var earth = this.add.sprite(68, 188, KE.SP_EARTH);
+        this.grass = new Grass(this, 68, 163, 'gs', 'grass.png');
+
+        // earth.depth = 1;
+         this.physics.add.collider(this.player2 ,MainScene.pipe,function (e) {
+             if( MainScene.alive )
+             {
+                 this.endGame();
+                 MainScene.alive = false;
+                 this.timedEvent.paused = true;
+             }
+
+            },null, this);
+        this.physics.add.collider(this.player2 ,this.grass,function (e) {this.timedEvent.paused = true; /*this.scene.restart();*/},null,this);
         this.player2.body.isCircle = true;
-        this.timedEvent = this.time.addEvent({ delay: 1, callback: this.callbackMove, callbackScope:this, repeat: -1 });
+        //this.timedEvent = this.time.addEvent({ delay: 1, callback: this.callbackMove, callbackScope:this, repeat: -1 });
 
 
 
     }
+
+   startGame():void
+   {
+       this.timedEvent = this.time.addEvent({ delay: 1, callback: this.callbackMove, callbackScope:this, repeat: -1 });
+   }
+
     callbackMove(): void {
         MainScene.pipe.forEach(function (pipe) { this.movePipe(pipe);}, this);
         this.grass.moveGrass();
@@ -68,6 +81,9 @@ export class MainScene extends Phaser.Scene {
         if (MainScene.alive == true) {this.cameras.main.fadeIn(200, 255, 255, 255);}
             this.input.keyboard.on('keydown_SPACE', function (event) {
                 this.scene.restart();
+                MainScene.gameStart = false;
+                console.log('GAME END');
+
             },this);
     }
 

@@ -6,6 +6,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
 private flap : boolean;
 private flapSound : Phaser.Sound.BaseSound;
+private mainScene : MainScene;
 
     constructor(scene,x,y,texture) {
         super(scene,x,y,texture);
@@ -13,6 +14,7 @@ private flapSound : Phaser.Sound.BaseSound;
         scene.sys.displayList.add(this);
         scene.physics.world.enableBody(this);
 
+        this.mainScene = scene;
         scene.children.add(this);
         // @ts-ignore
         this.body.allowGravity = false;
@@ -42,13 +44,26 @@ private flapSound : Phaser.Sound.BaseSound;
 
     setInput():void
     {
-       if(MainScene.alive == true) {
+
            this.scene.input.keyboard.on('keydown_SPACE', function (event) {
+
+              if(!MainScene.gameStart)
+              {
+//
+                  this.mainScene.startGame();
+                  // @ts-ignore
+                  this.body.allowGravity = true;
+                  MainScene.gameStart = true;
+                  console.log("GAME START");
+//
+              }
+               if(MainScene.alive ) {
                this.body.setVelocityY(-100);
-               console.log(MainScene.alive);
+             //  console.log(MainScene.alive);
                this.flapSound.play();
+               }
            },this );
-       }
+
     }
 
 
