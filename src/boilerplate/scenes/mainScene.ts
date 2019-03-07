@@ -23,6 +23,8 @@ export class MainScene extends Phaser.Scene {
     static gameStart: boolean;
     private ghost: Phaser.GameObjects.Sprite;
     private tap: Phaser.GameObjects.Sprite;
+    private scoreSound: Phaser.Sound.BaseSound;
+    private deadSound: Phaser.Sound.BaseSound;
 
     constructor() {
         super({
@@ -34,12 +36,16 @@ export class MainScene extends Phaser.Scene {
     };
 
     create(): void {
+
+        this.scoreSound = this.sound.add(KE.S_SCORE);
+        this.deadSound = this.sound.add(KE.S_DEAD);
         this.scoreText = this.add.bitmapText( 67, 10, 'flappyscore', '0', 12).setOrigin(0.5);
+        this.scoreText.visible = false;
         if (this.data.get('score') === undefined) {this.data.set('score', 0)};
-        this.scoreText2 = this.add.bitmapText( 67, 25, 'flappyscore', 'best: ' + this.data.get('score'), 12).setOrigin(0.5);
+       // this.scoreText2 = this.add.bitmapText( 67, 25, 'flappyscore', 'best: ' + this.data.get('score'), 12).setOrigin(0.5);
         MainScene.alive = true;
 
-        var background = this.add.sprite(68, 136, 'gs', 'bg.png');
+        var background = this.add.sprite(68, 136,KE.SP_BG,KE.SP_BG_FRAME);
 
 
         this.total = 0;
@@ -49,17 +55,29 @@ export class MainScene extends Phaser.Scene {
         var earth = this.add.sprite(68, 188, KE.SP_EARTH);
         this.grass = new Grass(this, 68, 163, 'gs', 'grass.png');
 
-        // earth.depth = 1;
-         this.physics.add.collider(this.player2 ,MainScene.pipe,function (e) {
-             if( MainScene.alive )
-             {
-                 this.endGame();
-                 MainScene.alive = false;
-                 this.timedEvent.paused = true;
-             }
+         earth.depth = 1;
+        this.physics.add.collider(this.player2 ,MainScene.pipe,function (e) {
+            if( MainScene.alive )
+            {
+                this.deadSound.play();
+                this.endGame();
+                MainScene.alive = false;
+                this.timedEvent.paused = true;
+            }
 
-            },null, this);
-        this.physics.add.collider(this.player2 ,this.grass,function (e) {this.timedEvent.paused = true; /*this.scene.restart();*/},null,this);
+           },null, this);
+        this.physics.add.collider(this.player2 ,this.grass,function (e) {
+            if( MainScene.alive )
+            {
+                this.deadSound.play();
+                this.endGame();
+                MainScene.alive = false;
+                this.timedEvent.paused = true;
+            }
+
+
+
+        },null,this);
         this.player2.body.isCircle = true;
         //this.timedEvent = this.time.addEvent({ delay: 1, callback: this.callbackMove, callbackScope:this, repeat: -1 });
 
@@ -89,6 +107,7 @@ export class MainScene extends Phaser.Scene {
        this.timedEvent = this.time.addEvent({ delay: 1, callback: this.callbackMove, callbackScope:this, repeat: -1 });
        this.tap.setVisible(false);
        this.ghost.setVisible(false);
+       this.scoreText.visible = true;
    }
 
     callbackMove(): void {
@@ -121,6 +140,7 @@ export class MainScene extends Phaser.Scene {
                let pipech = <Phaser.GameObjects.Zone> tpipe;
                pipech.x-=1;
                    if (!pipech.body.touching.none) {
+                       this.scoreSound.play();
                        this.total++;
                        console.log(this.total);
                        pipech.body.checkCollision.none = true;

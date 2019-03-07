@@ -56,7 +56,7 @@ export class StartScene extends Phaser.Scene {
 
 
 
-        },this)
+        },this);
 
         var earth = this.add.sprite(68, 188, KE.SP_EARTH);
        this.grass = new Grass(this, 68, 163, KE.SP_GRASS, KE.SP_GRASS_FRAME);

@@ -43,6 +43,12 @@ export enum KE {
     S_FLAP = 'soundFlap',
     S_FLAP_PATH = './src/boilerplate/assets/fly.mp3',
 
+    S_DEAD = 'dead',
+    S_DEAD_PATH = './src/boilerplate/assets/dead.wav',
+
+    //S_FLAP = 'soundFlap',
+    //S_FLAP_PATH = './src/boilerplate/assets/fly.mp3',
+
     S_SCORE = 'soundScore',
     S_SCORE_PATH = './src/boilerplate/assets/score.mp3',
 
