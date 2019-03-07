@@ -21,6 +21,8 @@ export class MainScene extends Phaser.Scene {
     private bounds: BitmapTextSize;
     public static alive: boolean;
     static gameStart: boolean;
+    private ghost: Phaser.GameObjects.Sprite;
+    private tap: Phaser.GameObjects.Sprite;
 
     constructor() {
         super({
@@ -61,13 +63,32 @@ export class MainScene extends Phaser.Scene {
         this.player2.body.isCircle = true;
         //this.timedEvent = this.time.addEvent({ delay: 1, callback: this.callbackMove, callbackScope:this, repeat: -1 });
 
+        this.cameras.main.fadeIn(300,0,0,0).on('camerafadeincomplete',function () {
+            //this.scene.start(KE.SCENE_MAIN);
+            console.log('MAIN_SCENE');
+        },this)
 
 
+        this.tap = this.add.sprite(this.game.scale.width/2+12,100,KE.SP_TAPBTN,);
+        this.ghost = this.add.sprite(this.game.scale.width/2,65,KE.SP_GHOST_BIRD);
+
+        this.tweens.add({
+            targets: this.tap,
+            y: this.tap.y-5,
+            duration: 1000,
+            ease: function (t) {
+                return Math.pow(Math.sin(t * 3), 3);
+            },
+            delay: 100,
+            loop:-1
+        });
     }
 
    startGame():void
    {
        this.timedEvent = this.time.addEvent({ delay: 1, callback: this.callbackMove, callbackScope:this, repeat: -1 });
+       this.tap.setVisible(false);
+       this.ghost.setVisible(false);
    }
 
     callbackMove(): void {

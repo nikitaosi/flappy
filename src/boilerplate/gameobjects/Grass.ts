@@ -1,4 +1,4 @@
-export class Grass extends Phaser.Physics.Arcade.Group {
+export class Grass extends Phaser.Physics.Arcade.StaticGroup {
 
 
 

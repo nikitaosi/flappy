@@ -49,7 +49,7 @@ export class StartScene extends Phaser.Scene {
         this.startBtn.on('pointerdown',function () {
 
 
-            this.cameras.main.fadeOut(1000,0,0,0).on('camerafadeoutcomplete',function () {
+            this.cameras.main.fadeOut(300,0,0,0).on('camerafadeoutcomplete',function () {
                 this.scene.start(KE.SCENE_MAIN);
                 console.log('MAIN_SCENE');
             },this)
@@ -59,7 +59,7 @@ export class StartScene extends Phaser.Scene {
         },this)
 
         var earth = this.add.sprite(68, 188, KE.SP_EARTH);
-        this.grass = new Grass(this, 68, 163, 'gs', 'grass.png');
+       this.grass = new Grass(this, 68, 163, KE.SP_GRASS, KE.SP_GRASS_FRAME);
 
         this.timedEvent = this.time.addEvent({ delay: 1, callback: this.move, callbackScope:this, repeat: -1 });
     }

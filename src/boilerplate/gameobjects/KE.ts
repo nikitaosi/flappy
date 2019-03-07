@@ -53,4 +53,14 @@ export enum KE {
     SP_BG = 'gs',
     SP_BG_FRAME = 'bg.png',
 
+
+    SP_GRASS= 'gs',
+    SP_GRASS_FRAME='grass.png',
+
+    SP_TAPBTN= 'tapBtn',
+    SP_TAPBTN_PATH='./src/boilerplate/assets/tapBtn.png',
+
+    SP_GHOST_BIRD= 'ghostBird',
+    SP_GHOST_BIRD_PATH='./src/boilerplate/assets/ghostBird.png'
+
 }
