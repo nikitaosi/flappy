@@ -23,6 +23,7 @@ export class MainScene extends Phaser.Scene {
     public static alive: boolean;
     static gameStart: boolean;
     public static hitPipe: boolean;
+    public static hitGrass: boolean;
     private fallSound : Phaser.Sound.BaseSound;
     private ghost: Phaser.GameObjects.Sprite;
     private tap: Phaser.GameObjects.Sprite;
@@ -50,6 +51,7 @@ export class MainScene extends Phaser.Scene {
         var background = this.add.sprite(68, 136,KE.SP_BG,KE.SP_BG_FRAME);
 
         MainScene.hitPipe = false;
+        MainScene.hitGrass = false;
         this.fallSound = this.sound.add(KE.S_FALL);
 
         MainScene.total = 0;
@@ -60,7 +62,7 @@ export class MainScene extends Phaser.Scene {
         this.grass = new Grass(this, 68, 163, 'gs', 'grass.png');
         earth.depth = 1;
         this.player2.depth = 1;
-         this.physics.add.collider(this.player2 ,MainScene.pipe,function (ob1, ob2) {
+         this.physics.add.collider(this.player2 ,MainScene.pipe,function (e) {
                  MainScene.hitPipe = true;
                  this.deadSound.play();
                  this.fallSound.play();
@@ -68,6 +70,8 @@ export class MainScene extends Phaser.Scene {
         this.physics.add.collider(this.player2 ,this.grass, function (e) {
             if( MainScene.alive )
             {
+                this.deadSound.play();
+                MainScene.hitGrass = true;
                 this.endGame();
                 MainScene.alive = false;
             }
@@ -105,7 +109,7 @@ export class MainScene extends Phaser.Scene {
    }
 
     callbackMove(): void {
-        if (!MainScene.hitPipe){
+        if (!MainScene.hitPipe && !MainScene.hitGrass){
             MainScene.pipe.forEach(function (pipe) { this.movePipe(pipe);}, this);
             this.grass.moveGrass();
         } else
@@ -115,13 +119,15 @@ export class MainScene extends Phaser.Scene {
     endGame(): void {
         if (MainScene.alive) {this.cameras.main.fadeIn(200, 255, 255, 255);}
             this.add.existing(new GameOverMenu(this));
-            this.input.keyboard.on('keydown_SPACE', function (event) {
+             var f = function (event) {
                 this.scene.restart();
                 this.timedEvent.paused = true;
                 MainScene.gameStart = false;
                 console.log('GAME END');
 
-            },this);
+            }
+            this.input.keyboard.on('keydown_SPACE', f, this)
+            this.input.on('pointerdown', f, this)
     }
 
     pipeBodiesOff(pipe): void {

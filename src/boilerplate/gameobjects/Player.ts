@@ -68,7 +68,7 @@ private tweenline: Phaser.Tweens.Timeline;
 
     setInput():void
     {
-           this.scene.input.keyboard.on('keydown_SPACE', function (event) {
+        var f = function (event) {
               if(!MainScene.gameStart)
               {
                   this.mainScene.startGame();
@@ -89,7 +89,9 @@ private tweenline: Phaser.Tweens.Timeline;
                }
 
                }
-           ,this );
+
+        this.scene.input.keyboard.on('keydown_SPACE', f, this);
+        this.scene.input.on('pointerdown', f, this);
 
     }
 
