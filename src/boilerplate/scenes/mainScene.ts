@@ -23,6 +23,7 @@ export class MainScene extends Phaser.Scene {
     public static alive: boolean;
     static gameStart: boolean;
     public static hitPipe: boolean;
+    private fallSound : Phaser.Sound.BaseSound;
 
     constructor() {
         super({
@@ -41,6 +42,7 @@ export class MainScene extends Phaser.Scene {
         var background = this.add.sprite(68, 136, 'gs', 'bg.png');
 
         MainScene.hitPipe = false;
+        this.fallSound = this.sound.add(KE.S_FALL);
 
         MainScene.total = 0;
         this.cameras.main.setBackgroundColor('#375064');
@@ -52,6 +54,7 @@ export class MainScene extends Phaser.Scene {
         this.player2.depth = 1;
          this.physics.add.collider(this.player2 ,MainScene.pipe,function (ob1, ob2) {
                  MainScene.hitPipe = true;
+                 this.fallSound.play();
             },null, this);
         this.physics.add.collider(this.player2 ,this.grass, function (e) {
             if( MainScene.alive )

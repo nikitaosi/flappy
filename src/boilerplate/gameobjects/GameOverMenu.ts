@@ -35,9 +35,8 @@ export class GameOverMenu extends Phaser.GameObjects.Container{
         let stars = (total) => {if (MainScene.total >= 6) {let result = Math.floor(MainScene.total/3-1); return result;}};
 
         for (var i = 0; i < stars(MainScene.total); i++) {
-            this.shiningstar[i].visible = true;
+            if (i <= 5) {this.shiningstar[i].visible = true};
         }
-        console.log(stars(MainScene.total));
          var finalscore =  this.scene.make.bitmapText( {x:101-1, y:90-3, font:'flappyscore', text:''+MainScene.total, size:8});//.setOrigin(0.5);
          var bestscore =  this.scene.make.bitmapText( {x:101-1, y:106-3, font:'flappyscore', text:''+this.scene.data.get('score'),size:8});//.setOrigin(0.5);
          finalscore.setDepth(1);

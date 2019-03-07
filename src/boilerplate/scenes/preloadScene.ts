@@ -14,6 +14,7 @@ export class PreloadScene extends Phaser.Scene {
         this.load.spritesheet(KE.SPH_BIRD,KE.SPH_BIRD_PATH,{ frameWidth: 17, frameHeight: 12 });
         this.load.audio(KE.S_FLAP,KE.S_FLAP_PATH);
         this.load.audio(KE.S_SCORE,KE.S_SCORE_PATH);
+        this.load.audio(KE.S_FALL,KE.S_FALL_PATH);
         this.load.image(KE.SP_EARTH, KE.SP_EARTH_PATH);
         this.load.image(KE.SP_START_BUTTON, KE.SP_START_BUTTON_PATH);
 
