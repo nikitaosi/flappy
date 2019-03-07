@@ -52,6 +52,9 @@ export enum KE {
     S_SCORE = 'soundScore',
     S_SCORE_PATH = './src/boilerplate/assets/score.mp3',
 
+    S_FALL = 'soundFall',
+    S_FALL_PATH = './src/boilerplate/assets/fall.mp3',
+
     SCENE_START = 'StartScene',
     SCENE_MAIN = 'MainScene',
     SCENE_PRELOAD = 'PreloadScene',

@@ -77,7 +77,7 @@ private tweenline: Phaser.Tweens.Timeline;
                   MainScene.gameStart = true;
                   console.log("GAME START");
               }
-               if(MainScene.alive ) {
+               if(MainScene.alive  && !MainScene.hitPipe && this.y>0) {
                this.body.setVelocityY(-100);
 
                 this.flapSound.play();

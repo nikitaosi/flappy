@@ -11,9 +11,7 @@ export class Grass extends Phaser.Physics.Arcade.StaticGroup {
 
     preload(): void {
 
-
     }
-
 
     moveGrass(): void {
         this.children.iterate(function (tpipe) {
