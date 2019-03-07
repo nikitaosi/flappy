@@ -57,7 +57,7 @@ private mainScene : MainScene;
                   console.log("GAME START");
 //
               }
-               if(MainScene.alive ) {
+               if(MainScene.alive  && !MainScene.hitPipe) {
                this.body.setVelocityY(-100);
              //  console.log(MainScene.alive);
                this.flapSound.play();

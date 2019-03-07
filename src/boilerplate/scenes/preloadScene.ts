@@ -16,6 +16,23 @@ export class PreloadScene extends Phaser.Scene {
         this.load.audio(KE.S_SCORE,KE.S_SCORE_PATH);
         this.load.image(KE.SP_EARTH, KE.SP_EARTH_PATH);
         this.load.image(KE.SP_START_BUTTON, KE.SP_START_BUTTON_PATH);
+
+        var progress = this.add.graphics();
+
+        this.load.on('progress', function (value) {
+
+            progress.clear();
+            progress.fillStyle(0xffffff, 1);
+            progress.fillRect(10, 100, 115 * value, 20);
+
+        });
+
+        this.load.on('complete', function () {
+
+            progress.destroy();
+
+        });
+
     };
 
     create(): void

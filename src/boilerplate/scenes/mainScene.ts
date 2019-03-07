@@ -22,6 +22,7 @@ export class MainScene extends Phaser.Scene {
     private bounds: BitmapTextSize;
     public static alive: boolean;
     static gameStart: boolean;
+    public static hitPipe: boolean;
 
     constructor() {
         super({
@@ -37,9 +38,9 @@ export class MainScene extends Phaser.Scene {
         if (this.data.get('score') === undefined) {this.data.set('score', 0)};
         //this.scoreText2 = this.add.bitmapText( 67, 25, 'flappyscore', 'best: ' + this.data.get('score'), 12).setOrigin(0.5);
         MainScene.alive = true;
-
         var background = this.add.sprite(68, 136, 'gs', 'bg.png');
 
+        MainScene.hitPipe = false;
 
         MainScene.total = 0;
         this.cameras.main.setBackgroundColor('#375064');
@@ -47,18 +48,12 @@ export class MainScene extends Phaser.Scene {
         MainScene.pipe = [new Pipe(this, 163), new Pipe(this, 243), new Pipe(this, 323)];
         var earth = this.add.sprite(68, 188, KE.SP_EARTH);
         this.grass = new Grass(this, 68, 163, 'gs', 'grass.png');
-
         earth.depth = 1;
-         this.physics.add.collider(this.player2 ,MainScene.pipe,function (e) {
-             if( MainScene.alive )
-             {
-                 this.endGame();
-                 MainScene.alive = false;
-                 this.timedEvent.paused = true;
-             }
-
+        this.player2.depth = 1;
+         this.physics.add.collider(this.player2 ,MainScene.pipe,function (ob1, ob2) {
+                 MainScene.hitPipe = true;
             },null, this);
-        this.physics.add.collider(this.player2 ,this.grass,function (e) {
+        this.physics.add.collider(this.player2 ,this.grass, function (e) {
             if( MainScene.alive )
             {
                 this.endGame();
@@ -79,22 +74,32 @@ export class MainScene extends Phaser.Scene {
    }
 
     callbackMove(): void {
-        MainScene.pipe.forEach(function (pipe) { this.movePipe(pipe);}, this);
-        this.grass.moveGrass();
-
-
+        if (!MainScene.hitPipe){
+            MainScene.pipe.forEach(function (pipe) { this.movePipe(pipe);}, this);
+            this.grass.moveGrass();
+        } else
+        {MainScene.pipe.forEach(function (pipe) { this.pipeBodiesOff(pipe);}, this);}
     }
 
     endGame(): void {
         if (MainScene.alive) {this.cameras.main.fadeIn(200, 255, 255, 255);}
             this.add.existing(new GameOverMenu(this));
-            this.scoreText.visible = false;
             this.input.keyboard.on('keydown_SPACE', function (event) {
                 this.scene.restart();
+                this.timedEvent.paused = true;
                 MainScene.gameStart = false;
                 console.log('GAME END');
             },this);
     }
+
+    pipeBodiesOff(pipe): void {
+       pipe.children.iterate(function (tpipe) {
+           if (tpipe instanceof Phaser.Physics.Arcade.Sprite) {
+               let pipech = <Phaser.Physics.Arcade.Sprite> tpipe;
+                   pipech.disableBody(true);
+           }
+       }, this);
+   }
 
    movePipe(pipe): void {
        pipe.children.iterate(function (tpipe) {
@@ -104,7 +109,8 @@ export class MainScene extends Phaser.Scene {
                pipech.refreshBody();
                if (pipech.x < -110) {
                    pipe.replacepipe();
-           }}
+           }
+       }
            else {
                let pipech = <Phaser.GameObjects.Zone> tpipe;
                pipech.x-=1;
@@ -112,7 +118,9 @@ export class MainScene extends Phaser.Scene {
                        MainScene.total++;
                        console.log(MainScene.total);
                        pipech.body.checkCollision.none = true;
-                       this.scoreText.setText(this.total);
+                       this.scoreText.setText(MainScene.total);
+                       this.scoreText.visible = true;
+                       this.scoreText.setDepth(2);
                        if (MainScene.total > this.data.get('score')){
                            this.data.set('score', MainScene.total);
                        };

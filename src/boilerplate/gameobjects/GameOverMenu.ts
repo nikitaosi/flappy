@@ -21,7 +21,7 @@ export class GameOverMenu extends Phaser.GameObjects.Container{
         var gap = 75;
         for (let i = 0; i < 5; i++) {
             this.palestar[i] = this.scene.make.sprite({x:gap,y:98,key:KE.SP_PALESTAR,frame:  KE.SP_PALESTAR_FRAME });
-            this.shiningstar[i]=this.scene.make.sprite({x:gap,y:100,key:KE.SP_SHININGSTAR,frame:  KE.SP_SHININGSTAR_FRAME });
+            this.shiningstar[i]=this.scene.make.sprite({x:gap,y:98,key:KE.SP_SHININGSTAR,frame:  KE.SP_SHININGSTAR_FRAME });
             this.shiningstar[i].visible=false;
             gap-=12;
         }
@@ -32,9 +32,14 @@ export class GameOverMenu extends Phaser.GameObjects.Container{
          gameover.setScale(2);
          retry.setScale(2);
          retry.setDepth(1);
+        let stars = (total) => {if (MainScene.total >= 6) {let result = Math.floor(MainScene.total/3-1); return result;}};
 
-         var finalscore =  this.scene.make.bitmapText( {x:101-1,y:90-3,font:'flappyscore',text:''+MainScene.total,size:6});//.setOrigin(0.5);
-         var bestscore =  this.scene.make.bitmapText( {x:101-1,y:106-3,font:'flappyscore',text:''+this.scene.data.get('score'),size:6});//.setOrigin(0.5);
+        for (var i = 0; i < stars(MainScene.total); i++) {
+            this.shiningstar[i].visible = true;
+        }
+        console.log(stars(MainScene.total));
+         var finalscore =  this.scene.make.bitmapText( {x:101-1, y:90-3, font:'flappyscore', text:''+MainScene.total, size:8});//.setOrigin(0.5);
+         var bestscore =  this.scene.make.bitmapText( {x:101-1, y:106-3, font:'flappyscore', text:''+this.scene.data.get('score'),size:8});//.setOrigin(0.5);
          finalscore.setDepth(1);
          bestscore.setDepth(1);
     }
